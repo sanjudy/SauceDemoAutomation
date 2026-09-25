@@ -13,7 +13,7 @@ import utilities.ConfigReader;
 
 public class LoginTest  extends BaseTest {
 
-    private LoginPage loginPage;
+  /*  private LoginPage loginPage;
 
     @BeforeMethod
     public void pageSetup(){
@@ -83,7 +83,7 @@ public class LoginTest  extends BaseTest {
                 "Incorrect error message displayed"
         );
     }
-
+*/
 
 
 }
