@@ -33,6 +33,8 @@ pipeline {
                 bat 'java -version'
                 bat 'mvn -version'
                 bat 'git --version'
+                bat 'echo %LOCALAPPDATA%'
+                bat 'whoami'
             }
         }
 
@@ -42,9 +44,15 @@ pipeline {
             }
         }
 
+        stage('Clear WebDriver Cache') {
+            steps {
+                bat 'rmdir /s /q "%LOCALAPPDATA%\\selenium" 2>nul || echo cache not found'
+            }
+        }
+
         stage('Run Tests') {
             steps {
-                bat "mvn test -Dbrowser=${params.BROWSER} -DsuiteXmlFile=testng.xml"
+                bat "mvn test -Dbrowser=${params.BROWSER} -DsuiteXmlFile=src/test/resources/testng.xml"
             }
         }
 
