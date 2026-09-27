@@ -33,8 +33,6 @@ pipeline {
                 bat 'java -version'
                 bat 'mvn -version'
                 bat 'git --version'
-                bat 'echo %LOCALAPPDATA%'
-                bat 'whoami'
             }
         }
 
@@ -46,7 +44,16 @@ pipeline {
 
         stage('Clear WebDriver Cache') {
             steps {
-                bat 'rmdir /s /q "%LOCALAPPDATA%\\selenium" 2>nul || echo cache not found'
+                bat '''
+                    if exist "%LOCALAPPDATA%\\selenium" (
+                        echo Found existing Selenium cache, clearing it...
+                        rmdir /s /q "%LOCALAPPDATA%\\selenium"
+                        echo Cache cleared successfully.
+                    ) else (
+                        echo No existing Selenium cache found, skipping.
+                    )
+                    exit /b 0
+                '''
             }
         }
 
